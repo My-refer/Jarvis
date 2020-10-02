@@ -34,14 +34,13 @@ def takecommand():
         print("Listining...")
         r.pause_threshold = 0.5 
         
-        audio = r.listen(source)
+        audio = r.listen(source=source, timeout=5, phrase_time_limit=5)
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language="en-in")
         print(f"user said: {query} \n ")
     except Exception as e:
-        print(e) # it print the error
-
+        print(e) # it prints the error
         print("Say that again please...")
         return"None"
     return query
@@ -77,10 +76,23 @@ if __name__=="__main__":
             webbrowser.open("youtube.com")
             
         elif "open stackoverflow" in query:
-            webbrowser.open("stackoverflow")
+            webbrowser.open("stackoverflow.com")
             
         elif "open google" in query:
             webbrowser.open("google.com")
+            
+        elif "search youtube" in query:
+            speak("What should I search in youtube?")
+            youtubeQuery = takeCommand()
+            webbrowser.open("www.youtube.com/results?search_query=" + youtubeQuery)
+            
+        elif "search google" in query:
+            speak("What should I search in google?")
+            searchQuery = takeCommand()
+            webbrowser.open("www.google.com/results?search_query=" + searchQuery)
+            
+        elif "open facebook" in query:
+            webbrowser.open("www.facebook.com")
             
         elif "play music" in query:
             music_dir = "E:\\The Polar Express (2004)[Dual Audio]\\asma"
@@ -107,6 +119,7 @@ if __name__=="__main__":
             except Exception as e:
                 print(e)
                 speak("sorry sir i am not able to send this email...")
+                
         elif "thank you bye" in query:
-            speak("Your welcome Sir")
+            speak("You are welcome Sir")
             break
